@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bắc Hà Lott</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header>
+    <h1>Bắc Hà Lott</h1>
+    <button id="settingsBtn" class="icon-btn" title="Cài đặt">⚙️</button>
+  </header>
+
+  <!-- Settings Modal -->
+  <div id="settingsModal" class="modal">
+    <div class="modal-content">
+      <h2>Cài đặt bộ số</h2>
+      <div class="settings-section">
+        <label class="setting-row">
+          <span>Số lượng bình:</span>
+          <input type="number" id="numTumblers" min="2" max="6" value="4">
+        </label>
+        <div class="boSo-per-tumbler-section">
+          <span>Bộ số mỗi bình (2-10 bi, 0 đến N-1):</span>
+          <div class="boSo-per-tumbler" id="boSoPerTumbler"></div>
+        </div>
+        <div class="ball-colors-section">
+          <span>Màu bi mỗi bình:</span>
+          <div class="ball-colors" id="ballColors"></div>
+        </div>
+        <label class="setting-row checkbox-row">
+          <input type="checkbox" id="noRepeat" checked>
+          <span>Không quay lại số cũ</span>
+        </label>
+      </div>
+      <div class="prizes-section">
+        <h3>Giải thưởng</h3>
+        <table class="prizes-table">
+          <thead>
+            <tr>
+              <th>Giải</th>
+              <th>Bật</th>
+              <th>Số lượng giải</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-prize="0" class="prize-dac-biet"><td>Giải đặc biệt</td><td><input type="checkbox" class="prize-check" data-prize="0"></td><td><input type="number" class="prize-qty" data-prize="0" min="0" value="0"></td></tr>
+            <tr data-prize="1"><td>Giải nhất</td><td><input type="checkbox" class="prize-check" data-prize="1"></td><td><input type="number" class="prize-qty" data-prize="1" min="0" value="1"></td></tr>
+            <tr data-prize="2"><td>Giải nhì</td><td><input type="checkbox" class="prize-check" data-prize="2"></td><td><input type="number" class="prize-qty" data-prize="2" min="0" value="1"></td></tr>
+            <tr data-prize="3"><td>Giải ba</td><td><input type="checkbox" class="prize-check" data-prize="3"></td><td><input type="number" class="prize-qty" data-prize="3" min="0" value="1"></td></tr>
+            <tr data-prize="4"><td>Giải tư</td><td><input type="checkbox" class="prize-check" data-prize="4"></td><td><input type="number" class="prize-qty" data-prize="4" min="0" value="1"></td></tr>
+            <tr data-prize="5"><td>Giải năm</td><td><input type="checkbox" class="prize-check" data-prize="5"></td><td><input type="number" class="prize-qty" data-prize="5" min="0" value="1"></td></tr>
+            <tr data-prize="6"><td>Giải sáu</td><td><input type="checkbox" class="prize-check" data-prize="6"></td><td><input type="number" class="prize-qty" data-prize="6" min="0" value="1"></td></tr>
+            <tr data-prize="7"><td>Giải bảy</td><td><input type="checkbox" class="prize-check" data-prize="7"></td><td><input type="number" class="prize-qty" data-prize="7" min="0" value="1"></td></tr>
+            <tr data-prize="8"><td>Giải tám</td><td><input type="checkbox" class="prize-check" data-prize="8"></td><td><input type="number" class="prize-qty" data-prize="8" min="0" value="1"></td></tr>
+            <tr data-prize="9" class="prize-khuyen-khich"><td>Giải khuyến khích</td><td><input type="checkbox" class="prize-check" data-prize="9"></td><td><input type="number" class="prize-qty" data-prize="9" min="0" value="1"></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-actions">
+        <button id="saveSettings" class="btn btn-primary">Lưu</button>
+        <button id="resetSettings" class="btn btn-danger" title="Xóa kết quả giải đã quay">Reset</button>
+        <button id="closeSettings" class="btn btn-secondary">Đóng</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal: đã quay hết giải - vui lòng tạo thêm -->
+  <div id="allPrizesFilledModal" class="modal">
+    <div class="modal-content modal-sm">
+      <h2>Đã quay hết giải</h2>
+      <p>Vui lòng tạo thêm giải thưởng trong Cài đặt hoặc Reset để quay lại.</p>
+      <div class="modal-actions">
+        <button id="allPrizesFilledCloseBtn" class="btn btn-primary">Đóng</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Reset Modal: xác nhận xóa giải -->
+  <div id="resetModal" class="modal">
+    <div class="modal-content modal-sm">
+      <h2>Xóa giải thưởng</h2>
+      <p>Bạn có chắc muốn xóa tất cả kết quả quay? Cài đặt sẽ được giữ nguyên.</p>
+      <!-- Bộ số display -->
+      <div class="bo-so-display" id="boSoDisplay">
+        Bộ số: 0-9 (10 số)
+      </div>
+
+      <div class="modal-actions">
+        <button id="resetConfirmBtn" class="btn btn-danger">Xóa giải</button>
+        <button id="resetCancelBtn" class="btn btn-secondary">Hủy</button>
+      </div>
+    </div>
+  </div>
+
+  <main>
+    <section id="screenQuay" class="screen screen-quay-layout">
+      <!-- List xem giải nhanh - 10 giải gần nhất (bên trái, cuộn chuột) -->
+      <aside class="recent-draws-sidebar">
+        <h3 class="recent-draws-title">Xem giải nhanh</h3>
+        <div class="recent-draws-scroll" id="recentDrawsList">
+          <!-- Nội dung render bởi app.js -->
+        </div>
+      </aside>
+
+      <div class="screen-quay-center">
+        <!-- Result display (numbers when stopped) -->
+        <div id="resultDisplay" class="result-display hidden">
+          <div class="result-numbers" id="resultNumbers"></div>
+        </div>
+
+        <!-- Glass Tumblers (Vietlott style with wind effect) - bộ số hiển thị bên dưới mỗi ảnh bình -->
+        <div class="tumblers-container">
+          <div class="wind-effect"></div>
+          <div class="tumblers" id="tumblers"></div>
+        </div>
+
+        <!-- Prize counter -->
+        <div class="prize-counter" id="prizeCounter">
+          <span>Đã quay: <strong id="currentPrize">1/1</strong> <strong id="currentPrizeName">Giải nhất</strong></span>
+          <span>Tổng giải: <strong id="totalPrizes">8</strong></span>
+        </div>
+      </div>
+
+      <!-- Controls - dọc bên phải -->
+      <div class="controls">
+        <button id="spinBtn" class="btn btn-spin">Quay</button>
+        <button id="stopBtn" class="btn btn-stop" disabled>Dừng</button>
+        <a href="xemgiai.html" class="btn btn-xemgiai">Xem giải ▶</a>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
