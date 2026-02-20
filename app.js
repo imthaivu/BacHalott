@@ -440,11 +440,18 @@ function renderBalls(winningDigits) {
         for (let s = 0; s <= 20; s++) {
           const currentT = finalT * (s / 20);
           const p = getLLinePosition(currentT, 2);
-          kfs.push({ left: `${p.left}%`, bottom: `${p.bottom}%` });
+          // Do ta đã bỏ transform translate(-22px, -45px), cần điều chỉnh tọa độ ban đầu trực tiếp trong JS 
+          // để bi rơi đúng vào hình vẽ. Hệ tọa độ viewBox 0 0 100 100
+          // Dịch left: -22px trên vùng width giả định 100px = -22%
+          // Dịch top: -45px => bottom sinh ra tăng lên 45%
+          kfs.push({ 
+            left: `calc(${p.left}% - 22px)`, 
+            bottom: `calc(${p.bottom}% + 45px)` 
+          });
         }
         
-        ball.style.left = `${left}%`;
-        ball.style.bottom = `${bottom}%`;
+        ball.style.left = `calc(${left}% - 22px)`;
+        ball.style.bottom = `calc(${bottom}% + 45px)`;
 
         const anim = ball.animate(kfs, {
           duration: 400 + i * 50,
@@ -515,26 +522,19 @@ function animateBallsIntoBottle() {
       const T_start = startT_resting * (96 / 169);
       
       const kfs = [];
-      const isLeading = index >= Math.floor(count / 2); // Nửa đầu đoàn thì lăn xa, nửa sau thì rớt nhanh
 
-      if (isLeading) {
-        // Viên phía đầu đoàn -> Lăn theo đường (T chạy tới 1)
-        for (let s = 0; s <= 20; s++) {
-          const currentT = T_start + (1 - T_start) * (s / 20);
-          const p = getFullPathPosition(currentT);
-          kfs.push({ left: `${p.left}%`, bottom: `${p.bottom}%`, offset: 0.65 * (s / 20) });
-        }
-      } else {
-        // Viên phía cuối đoàn -> Chỉ lăn tới phần ngang đầu tiên (T chạy tới 96/169) rồi rớt đáy luôn
-        const endT = Math.max(T_start, 96 / 169);
-        for (let s = 0; s <= 10; s++) {
-          const currentT = T_start + (endT - T_start) * (s / 10);
-          const p = getFullPathPosition(currentT);
-          kfs.push({ left: `${p.left}%`, bottom: `${p.bottom}%`, offset: 0.4 * (s / 10) });
-        }
+      // Tất cả các bi đều di chuyển theo toàn bộ đường line (T chạy tới 1)
+      for (let s = 0; s <= 20; s++) {
+        const currentT = T_start + (1 - T_start) * (s / 20);
+        const p = getFullPathPosition(currentT);
+        kfs.push({ 
+          left: `calc(${p.left}% - 22px)`, 
+          bottom: `calc(${p.bottom}% + 45px)`, 
+          offset: 0.8 * (s / 20) 
+        });
       }
 
-      // Rơi thẳng vào vị trí đích ngẫu nhiên (chảy vào đáy luôn / mượt mà về đích)
+      // Từ điểm cuối của path (offset 0.8), trôi mượt mà tới vị trí đích ngẫu nhiên (offset 1.0)
       kfs.push({ left: `${left}%`, bottom: `${bottom}%`, offset: 1.0 });
       
       ball.style.left = `${left}%`;

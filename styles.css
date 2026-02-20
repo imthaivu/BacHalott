@@ -804,9 +804,9 @@ main {
   border-radius: 55% 55% 42% 42% / 58% 58% 38% 38%;
 }
 
-/* Bi theo đường L: cùng transform với line, chưa overflow hidden */
+/* Bi theo đường L: Không transform cả container, chỉ giữ overflow visible để bi chảy vào từ ngoài */
 .balls-container.l-flow-mode {
-  transform: translate(-22px, -45px);
+  /* transform: translate(-22px, -45px); KHÔNG DÙNG NỮA VÌ LÀM DỊCH CHUYỂN ĐÁY BÌNH */
   overflow: visible;
 }
 
