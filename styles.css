@@ -774,11 +774,12 @@ main {
   pointer-events: none;
   z-index: 0;
   opacity: 0;
+  display: none;
   transition: opacity 0.3s;
 }
 
 .tumbler-ball-outline.show-l-flow .l-flow-path {
-  opacity: 1;
+  opacity: 0;
 }
 
 .l-flow-path svg {

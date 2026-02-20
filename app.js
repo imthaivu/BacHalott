@@ -269,7 +269,7 @@ function buildTumblers() {
           </div>
           <div class="l-flow-path" title="Đường L: cong xuống dưới ở phần đuôi">
             <svg viewBox="0 0 100 100" preserveAspectRatio="none" style="overflow: visible;">
-              <path d="M 12 10 L 12 92 Q 14 97 22 92 L 82 92 Q 95 92 95 110" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M 22 10 L 22 92 L 82 92 Q 95 92 95 110" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
           <div class="balls-container" id="balls${i}"></div>
@@ -364,29 +364,19 @@ function isInitialState() {
 
 // Vị trí bi trên đường L: M 12 10 L 12 92 Q 14 97 22 92 L 82 92 Q 95 92 95 110
 // viewBox 0 0 100 100; CSS left=x, bottom=100-y
-function getLLinePosition(i, count) {
-  const t = count <= 1 ? 0 : i / (count - 1);
-  const L = 96; // 82 (dọc) + 11 (cong) + 3 (ngang nhỏ)
-  const t1 = 82 / L;
-  const t2 = 93 / L;
+function getLLinePositionByT(t) {
+  const L = 82; // Chỉ còn đường dọc M 22 10 L 22 92
   let left, bottom;
-  if (t <= t1) {
-    left = 12;
-    bottom = 100 - (10 + 82 * (t / t1));
-  } else if (t <= t2) {
-    const u = (t - t1) / (t2 - t1);
-    // Quadratic Q(14,97) from (12,92) to (22,92)
-    const x = (1 - u) ** 2 * 12 + 2 * (1 - u) * u * 14 + u * u * 22;
-    const y = (1 - u) ** 2 * 92 + 2 * (1 - u) * u * 97 + u * u * 92;
-    left = x;
-    bottom = 100 - y;
-  } else {
-    const u = (t - t2) / (1 - t2);
-    // Đoạn thẳng 3px từ x=22 đến x=25
-    left = 22 + 3 * u;
-    bottom = 100 - 92;
-  }
+  left = 22;
+  bottom = 100 - (10 + 82 * t);
   return { left, bottom };
+}
+
+function getLLinePosition(i, count) {
+  const maxBalls = 10;
+  const step = 1 / (maxBalls - 1);
+  const t = count <= 1 ? 1 : Math.max(0, 1 - (count - 1 - i) * step);
+  return getLLinePositionByT(t);
 }
 
 // Render balls - initial: hàng dọc bên trái (L); đã có giải: random trong ellipse đáy; khi quay: bay random
@@ -438,10 +428,12 @@ function renderBalls(winningDigits) {
 
       if (initial) {
         const kfs = [];
-        const finalT = count <= 1 ? 0 : i / (count - 1);
+        const maxBalls = 10;
+        const step = 1 / (maxBalls - 1);
+        const finalT = count <= 1 ? 1 : Math.max(0, 1 - (count - 1 - i) * step);
         for (let s = 0; s <= 20; s++) {
           const currentT = finalT * (s / 20);
-          const p = getLLinePosition(currentT, 2);
+          const p = getLLinePositionByT(currentT);
           // Do ta đã bỏ transform translate(-22px, -45px), cần điều chỉnh tọa độ ban đầu trực tiếp trong JS 
           // để bi rơi đúng vào hình vẽ. Hệ tọa độ viewBox 0 0 100 100
           // Dịch left: -22px trên vùng width giả định 100px = -22%
@@ -469,26 +461,19 @@ function renderBalls(winningDigits) {
 
 // Hàm tính tọa độ trên TOÀN BỘ đường L (bao gồm cả phần đuôi dài 20px và bẻ gập)
 function getFullPathPosition(t) {
-  const L = 169; // 82 (dọc) + 11 (cong 1) + 60 (ngang) + 16 (cong 2)
+  const L = 158; // 82 (dọc) + 60 (ngang) + 16 (cong 2)
   const t1 = 82 / L;
-  const t2 = 93 / L;
-  const t3 = 153 / L;
+  const t2 = 142 / L;
   let left, bottom;
   if (t <= t1) {
-    left = 12;
+    left = 22;
     bottom = 100 - (10 + 82 * (t / t1));
   } else if (t <= t2) {
     const u = (t - t1) / (t2 - t1);
-    const x = (1 - u) ** 2 * 12 + 2 * (1 - u) * u * 14 + u * u * 22;
-    const y = (1 - u) ** 2 * 92 + 2 * (1 - u) * u * 97 + u * u * 92;
-    left = x;
-    bottom = 100 - y;
-  } else if (t <= t3) {
-    const u = (t - t2) / (t3 - t2);
     left = 22 + 60 * u;
     bottom = 100 - 92;
   } else {
-    const u = (t - t3) / (1 - t3);
+    const u = (t - t2) / (1 - t2);
     const x = (1 - u) ** 2 * 82 + 2 * (1 - u) * u * 95 + u * u * 95;
     const y = (1 - u) ** 2 * 92 + 2 * (1 - u) * u * 92 + u * u * 110;
     left = x;
@@ -519,9 +504,11 @@ function animateBallsIntoBottle() {
     const totalDuration = BALL_FLOW_STAGGER * (maxIndex + 1) + PATH_DURATION;
     targets.forEach(({ ball, left, bottom, index, count }) => {
       const delay = index * BALL_FLOW_STAGGER;
-      const startT_resting = count <= 1 ? 0 : index / (count - 1);
-      // Ánh xạ T_resting hiện tại (0 -> 1) sang trục tọa độ T của toàn bộ path (0 -> 96/169)
-      const T_start = startT_resting * (96 / 169);
+      const maxBalls = 10;
+      const step = 1 / (maxBalls - 1);
+      const startT_resting = count <= 1 ? 1 : Math.max(0, 1 - (count - 1 - index) * step);
+      // Ánh xạ T_resting hiện tại (0 -> 1) sang trục tọa độ T của toàn bộ path (0 -> 82/158)
+      const T_start = startT_resting * (82 / 158);
       
       const kfs = [];
 
