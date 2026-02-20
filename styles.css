@@ -142,7 +142,8 @@ h1 {
   padding: 1.5rem;
 }
 
-.modal-content h2, .modal-content h3 {
+.modal-content h2,
+.modal-content h3 {
   margin-bottom: 1rem;
   color: var(--accent-yellow);
 }
@@ -175,7 +176,7 @@ h1 {
   margin-bottom: 1rem;
 }
 
-.boSo-per-tumbler-section > span {
+.boSo-per-tumbler-section>span {
   display: block;
   margin-bottom: 0.5rem;
 }
@@ -211,7 +212,7 @@ h1 {
   margin-bottom: 1rem;
 }
 
-.ball-colors-section > span {
+.ball-colors-section>span {
   display: block;
   margin-bottom: 0.5rem;
 }
@@ -250,7 +251,8 @@ h1 {
   margin-bottom: 1rem;
 }
 
-.prizes-table th, .prizes-table td {
+.prizes-table th,
+.prizes-table td {
   padding: 0.5rem;
   text-align: left;
   border-bottom: 1px solid var(--glass-border);
@@ -397,19 +399,26 @@ main {
   height: 140px;
   pointer-events: none;
   opacity: 0.4;
-  background: radial-gradient(circle at 50% 50%, rgba(245,213,71,0.5) 0%, rgba(245,163,181,0.3) 40%, transparent 70%);
+  background: radial-gradient(circle at 50% 50%, rgba(245, 213, 71, 0.5) 0%, rgba(245, 163, 181, 0.3) 40%, transparent 70%);
   border-radius: 50%;
 }
-.xemgiai-firework-l { left: -40px; }
-.xemgiai-firework-r { right: -40px; transform: scaleX(-1); }
+
+.xemgiai-firework-l {
+  left: -40px;
+}
+
+.xemgiai-firework-r {
+  right: -40px;
+  transform: scaleX(-1);
+}
 
 .xemgiai-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0.75rem 1.5rem;
-  background: linear-gradient(90deg, var(--red-light), rgba(255,150,150,0.9));
-  border-bottom: 1px solid rgba(0,0,0,0.06);
+  background: linear-gradient(90deg, var(--red-light), rgba(255, 150, 150, 0.9));
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .xemgiai-back {
@@ -420,7 +429,10 @@ main {
   border-radius: 8px;
   transition: background 0.2s;
 }
-.xemgiai-back:hover { background: rgba(123,201,106,0.25); }
+
+.xemgiai-back:hover {
+  background: rgba(123, 201, 106, 0.25);
+}
 
 .xemgiai-logo {
   font-size: 1.2rem;
@@ -429,7 +441,7 @@ main {
 }
 
 .xemgiai-page {
-  max-width: 480px;
+  /* max-width: 480px; */
   margin: 0 auto;
   padding: 1.5rem;
 }
@@ -454,8 +466,35 @@ main {
 
 .xemgiai-main-row {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 1rem;
+}
+
+.xemgiai-main-row.layout-column {
+  flex-direction: column;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.xemgiai-main-row.layout-column .xemgiai-prize-label {
+  flex: 0 0 auto;
+  min-width: 160px;
+}
+
+.xemgiai-main-row.layout-column .xemgiai-num-boxes-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.4rem;
+  width: 100%;
+}
+
+.xemgiai-main-row.layout-column .xemgiai-num-box {
+  flex: 1 1 calc(10% - 0.4rem);
+  min-width: 32px;
+  height: 40px;
+  font-size: 1.1rem;
+  padding: 0 2px;
 }
 
 .xemgiai-num-boxes-wrap {
@@ -501,8 +540,13 @@ main {
   font-weight: 700;
 }
 
-.xemgiai-num-box.num-red { color: var(--red-accent); }
-.xemgiai-num-box.num-orange { color: #d97706; }
+.xemgiai-num-box.num-red {
+  color: var(--red-accent);
+}
+
+.xemgiai-num-box.num-orange {
+  color: #d97706;
+}
 
 .xemgiai-additional {
   margin-top: 1rem;
@@ -529,13 +573,27 @@ main {
 }
 
 @keyframes revealFadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 @keyframes revealSlideUp {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .prize-slot.reveal-slot,
@@ -546,8 +604,15 @@ main {
 }
 
 @keyframes revealSlotPop {
-  from { opacity: 0; transform: scale(0.8); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
 /* Result display */
@@ -586,9 +651,19 @@ main {
 }
 
 @keyframes popIn {
-  0% { transform: scale(0); opacity: 0; }
-  50% { transform: scale(1.2); }
-  100% { transform: scale(1); opacity: 1; }
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  50% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 /* Tumblers container */
@@ -605,16 +680,25 @@ main {
   left: 10%;
   right: 10%;
   height: 100px;
-  background: 
-    linear-gradient(180deg, transparent 0%, rgba(245,213,71,0.08) 20%, rgba(255,255,255,0.15) 45%, transparent 75%);
+  background:
+    linear-gradient(180deg, transparent 0%, rgba(245, 213, 71, 0.08) 20%, rgba(255, 255, 255, 0.15) 45%, transparent 75%);
   border-radius: 50%;
   animation: windBlow 1.8s ease-in-out infinite;
   pointer-events: none;
 }
 
 @keyframes windBlow {
-  0%, 100% { opacity: 0.6; transform: scaleY(1) scaleX(1); }
-  50% { opacity: 1; transform: scaleY(1.15) scaleX(1.05); }
+
+  0%,
+  100% {
+    opacity: 0.6;
+    transform: scaleY(1) scaleX(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scaleY(1.15) scaleX(1.05);
+  }
 }
 
 /* Tumblers - tối đa 5 bình mỗi hàng, căn giữa khi ít hơn 5 */
@@ -624,7 +708,8 @@ main {
   justify-content: center;
   gap: 1rem;
   width: 100%;
-  max-width: 764px; /* 5×140 + 4×16 */
+  max-width: 764px;
+  /* 5×140 + 4×16 */
   margin: 0 auto;
 }
 
@@ -771,7 +856,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.35);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.35);
   transition: all 0.3s ease;
 }
 
@@ -780,8 +865,15 @@ main {
 }
 
 @keyframes tubeBlink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.35; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.35;
+  }
 }
 
 .tube-display.revealed {
@@ -789,9 +881,19 @@ main {
 }
 
 @keyframes ballPopIn {
-  0% { transform: scale(0.5); opacity: 0; }
-  70% { transform: scale(1.15); }
-  100% { transform: scale(1); opacity: 1; }
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+
+  70% {
+    transform: scale(1.15);
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 /* Bi trong outline - padding đủ lớn để viền bi luôn trong outline xanh */
@@ -821,16 +923,39 @@ main {
 
 /* Khi quay: bi bay random khắp outline - mỗi bi dùng --blow-x/y từ JS */
 @keyframes ballBlowUp {
-  0%, 100% { transform: translate(0, 0) scale(1); opacity: 1; }
-  20% { transform: translate(var(--blow-x1, 0), var(--blow-y1, -40px)) scale(1.01); opacity: 0.98; }
-  40% { transform: translate(var(--blow-x2, 0), var(--blow-y2, -25px)) scale(0.99); opacity: 1; }
-  60% { transform: translate(var(--blow-x3, 0), var(--blow-y3, -55px)) scale(1); opacity: 0.97; }
-  80% { transform: translate(var(--blow-x4, 0), var(--blow-y4, -35px)) scale(1); opacity: 1; }
+
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 1;
+  }
+
+  20% {
+    transform: translate(var(--blow-x1, 0), var(--blow-y1, -40px)) scale(1.01);
+    opacity: 0.98;
+  }
+
+  40% {
+    transform: translate(var(--blow-x2, 0), var(--blow-y2, -25px)) scale(0.99);
+    opacity: 1;
+  }
+
+  60% {
+    transform: translate(var(--blow-x3, 0), var(--blow-y3, -55px)) scale(1);
+    opacity: 0.97;
+  }
+
+  80% {
+    transform: translate(var(--blow-x4, 0), var(--blow-y4, -35px)) scale(1);
+    opacity: 1;
+  }
 }
 
 /* Khi dừng: bi rơi xuống đáy */
 @keyframes ballSettle {
-  to { transform: translateY(0) translateX(0) scale(1); }
+  to {
+    transform: translateY(0) translateX(0) scale(1);
+  }
 }
 
 .ball {
@@ -845,8 +970,8 @@ main {
   background: var(--ball-color);
   color: #1a0a0a;
   box-shadow:
-    0 2px 4px rgba(0,0,0,0.4),
-    inset 0 1px 0 rgba(255,255,255,0.4);
+    0 2px 4px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
   margin-left: -10px;
   /* left, bottom set by JS - random trong vùng oval */
   transition: transform 0.2s;
@@ -856,7 +981,7 @@ main {
 
 .ball.winning {
   background: var(--ball-color);
-  box-shadow: 0 0 10px rgba(255,255,255,0.5), 0 2px 4px rgba(0,0,0,0.4);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 2px 4px rgba(0, 0, 0, 0.4);
   z-index: 2;
 }
 
@@ -1035,8 +1160,15 @@ main {
 }
 
 @keyframes slotPulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.5;
+  }
 }
 
 /* List xem giải nhanh - đối xứng với 3 nút bên phải */
@@ -1047,7 +1179,7 @@ main {
   transform: translateY(-50%);
   width: 180px;
   max-height: min(380px, 60vh);
-  background: linear-gradient(180deg, rgba(255,255,255,0.25), rgba(255,255,255,0.12));
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0.12));
   border-radius: 12px;
   padding: 0.75rem;
   border: 1px solid var(--glass-border);
@@ -1094,23 +1226,30 @@ main {
   gap: 0.2rem;
   padding: 0.5rem 0.6rem;
   margin-bottom: 0.5rem;
-  background: rgba(255,255,255,0.5);
+  background: rgba(255, 255, 255, 0.5);
   border-radius: 8px;
   border-left: 4px solid var(--red-accent);
-  border-bottom: 1px solid rgba(0,0,0,0.08);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   font-size: 0.8rem;
   transition: transform 0.15s, box-shadow 0.15s;
 }
 
-.recent-draw-item:last-child { margin-bottom: 0; }
+.recent-draw-item:last-child {
+  margin-bottom: 0;
+}
 
 .recent-draw-item:hover {
   transform: translateX(2px);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.recent-draw-item[data-prize-index="0"] { border-left-color: var(--accent-yellow); }
-.recent-draw-item[data-prize-index="9"] { border-left-color: var(--accent-green); }
+.recent-draw-item[data-prize-index="0"] {
+  border-left-color: var(--accent-yellow);
+}
+
+.recent-draw-item[data-prize-index="9"] {
+  border-left-color: var(--accent-green);
+}
 
 .recent-draw-prize {
   font-weight: 600;
@@ -1129,15 +1268,11 @@ main {
 .recent-draws-empty {
   padding: 1rem;
   text-align: center;
-  color: rgba(0,0,0,0.4);
+  color: rgba(0, 0, 0, 0.4);
   font-size: 0.85rem;
 }
 
-.xemgiai-page {
-  max-width: 480px;
-  margin: 0 auto;
-  padding: 1.5rem;
-}
+
 
 /* Controls */
 /* Bình ở giữa, xem giải nhanh trái & 3 nút phải đối xứng (cùng 30px, cùng top 50%) */
@@ -1146,7 +1281,8 @@ main {
 }
 
 .screen-quay-center {
-  margin: 0 119px; /* vùng giữa = 1050-48-238 >= 764px (5 bình) */
+  margin: 0 119px;
+  /* vùng giữa = 1050-48-238 >= 764px (5 bình) */
 }
 
 .controls {
@@ -1172,37 +1308,69 @@ main {
     width: 110px;
     height: 190px;
   }
+
   .tube-display {
     width: 28px;
     height: 28px;
     font-size: 1.2rem;
   }
+
   .ball {
     width: 16px;
     height: 16px;
     font-size: 8px;
     margin-left: -8px;
   }
+
   .tumbler-wrapper {
     transform: scale(0.88);
   }
+
   .tumbler-wrapper {
     flex: 0 0 110px;
   }
+
   .tumblers {
     max-width: 614px;
   }
+
   .result-num {
     width: 48px;
     height: 48px;
     font-size: 1.5rem;
   }
-  .xemgiai-prize-label { flex: 0 0 130px; font-size: 0.75rem; padding: 0.5rem 0.75rem; }
-  .xemgiai-num-box { min-width: 70px; max-width: 100px; font-size: 1.1rem; }
-  .xemgiai-num-boxes-wrap .xemgiai-num-box { min-width: 56px; max-width: 90px; }
-  .xemgiai-additional-grid .xemgiai-num-box { height: 38px; font-size: 0.95rem; }
-  .screen-quay-layout { flex-direction: column; align-items: stretch; }
-  .screen-quay-center { margin: 0; }
+
+  .xemgiai-prize-label {
+    flex: 0 0 130px;
+    font-size: 0.75rem;
+    padding: 0.5rem 0.75rem;
+  }
+
+  .xemgiai-num-box {
+    min-width: 70px;
+    max-width: 100px;
+    font-size: 1.1rem;
+  }
+
+  .xemgiai-num-boxes-wrap .xemgiai-num-box {
+    min-width: 56px;
+    max-width: 90px;
+  }
+
+  .xemgiai-additional-grid .xemgiai-num-box {
+    height: 38px;
+    font-size: 0.95rem;
+  }
+
+  .screen-quay-layout {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .screen-quay-center {
+    margin: 0;
+  }
+
   .controls {
     position: static;
     transform: none;
@@ -1210,7 +1378,11 @@ main {
     justify-content: center;
     flex-wrap: wrap;
   }
-  .controls .btn { min-width: 100px; }
+
+  .controls .btn {
+    min-width: 100px;
+  }
+
   /* List xem giải nhanh - mobile: về flow, trên nội dung */
   .recent-draws-sidebar {
     position: static;

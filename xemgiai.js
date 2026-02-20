@@ -57,6 +57,9 @@ function renderMainPrizes() {
 
     const row = document.createElement('div');
     row.className = 'xemgiai-main-row reveal-item';
+    if (qty > 4) {
+      row.classList.add('layout-column');
+    }
     row.style.animationDelay = `${idx * 0.12}s`;
 
     const label = document.createElement('div');

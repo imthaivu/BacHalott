@@ -65,6 +65,8 @@ const screensTrack = document.getElementById('screensTrack');
 const spinAudio = new Audio('sound/quay-bi.MP3');
 spinAudio.loop = true;
 
+const winAudio = new Audio('sound/win.mp3');
+
 const PRIZE_NAMES = ['Giải đặc biệt', 'Giải nhất', 'Giải nhì', 'Giải ba', 'Giải tư', 'Giải năm', 'Giải sáu', 'Giải bảy', 'Giải tám', 'Giải khuyến khích'];
 
 // Suy ra currentPrizeIndex + currentSlotInPrize từ filledPrizes (nguồn thật) để "đã quay" khớp data
@@ -914,7 +916,7 @@ function startSpin() {
     const startSpinning = () => {
       startTumblerSpin();
       let elapsed = 0;
-      const duration = 3000 + Math.random() * 2000;
+      const duration = 2000 + Math.random() * 2000;
       state.spinInterval = setInterval(() => {
         elapsed += 100;
         if (elapsed >= duration) {
@@ -936,6 +938,9 @@ function finishSpin(digits) {
   stopTumblerSpin();
   spinAudio.pause();
   
+  winAudio.currentTime = 0;
+  winAudio.play().catch(e => console.log('Win audio play failed:', e));
+
   state.isSpinning = false;
   spinBtn.disabled = false;
   stopBtn.disabled = true;
