@@ -65,7 +65,7 @@ const screensTrack = document.getElementById('screensTrack');
 const spinAudio = new Audio('sound/quay-bi.MP3');
 spinAudio.loop = true;
 
-const winAudio = new Audio('sound/win.mp3');
+const winAudio = new Audio('sound/win.MP3');
 
 const PRIZE_NAMES = ['Giải đặc biệt', 'Giải nhất', 'Giải nhì', 'Giải ba', 'Giải tư', 'Giải năm', 'Giải sáu', 'Giải bảy', 'Giải tám', 'Giải khuyến khích'];
 
@@ -890,6 +890,12 @@ function startSpin() {
   
   spinAudio.currentTime = 0;
   spinAudio.play().catch(e => console.log('Audio play failed:', e));
+  
+  // Unlock winAudio on user interaction
+  winAudio.play().then(() => {
+    winAudio.pause();
+    winAudio.currentTime = 0;
+  }).catch(e => console.log('Win audio unlock failed:', e));
 
   const fallPromises = [];
   for (let i = 0; i < state.numTumblers; i++) {
@@ -925,9 +931,6 @@ function startSpin() {
 function finishSpin(digits) {
   stopTumblerSpin();
   spinAudio.pause();
-  
-  winAudio.currentTime = 0;
-  winAudio.play().catch(e => console.log('Win audio play failed:', e));
 
   state.isSpinning = false;
   spinBtn.disabled = false;
@@ -937,6 +940,8 @@ function finishSpin(digits) {
   
   // result-numbers hiện sau khi bi lên 2s
   setTimeout(() => {
+    winAudio.currentTime = 0;
+    winAudio.play().catch(e => console.log('Win audio play failed:', e));
     updateResultDisplay(digits);
   }, 2000);
 
