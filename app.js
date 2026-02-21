@@ -899,6 +899,7 @@ function startSpin() {
     resetTumblerDisplays();
     renderBalls();
     const digits = pickNDigits();
+    state.currentSpinDigits = digits;
     const initial = isInitialState();
     const startSpinning = () => {
       startTumblerSpin();
@@ -1065,8 +1066,14 @@ function renderRecentDrawsList() {
       const el = document.createElement('div');
       el.className = 'recent-draw-item';
       el.dataset.prizeIndex = item.prizeIndex;
-      const slotLabel = item.qty > 1 ? ` (${item.slotInPrize}/${item.qty})` : '';
-      el.innerHTML = `<span class="recent-draw-prize">${item.prizeName}${slotLabel}</span><span class="recent-draw-value">${item.value}</span>`;
+      const shortNames = {
+        'Giải đặc biệt': 'ĐB', 'Giải nhất': 'G1', 'Giải nhì': 'G2', 'Giải ba': 'G3',
+        'Giải tư': 'G4', 'Giải năm': 'G5', 'Giải sáu': 'G6', 'Giải bảy': 'G7', 
+        'Giải tám': 'G8', 'Giải khuyến khích': 'KK'
+      };
+      const shortName = shortNames[item.prizeName] || item.prizeName;
+      const slotLabel = item.qty > 1 ? ` (${item.slotInPrize})` : '';
+      el.innerHTML = `<span class="recent-draw-prize">${shortName}${slotLabel}: </span><span class="recent-draw-value">${item.value}</span>`;
       container.appendChild(el);
     });
   } catch (e) {
